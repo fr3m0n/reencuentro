@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="pagina-evento">
+    <div class="encabezado-pagina">
+        <h2>Detalles del Encuentro</h2>
+        <p>Te esperamos para revivir aquellos momentos inolvidables.</p>
+    </div>
+
+    <div class="tarjeta-info">
+        <!-- Solo Fecha -->
+        <div class="fila-info">
+            <div class="icono-grande">
+                <iconify-icon icon="mdi:calendar-month"></iconify-icon>
+            </div>
+            <div>
+                <h3>Fecha y Hora</h3>
+                <p>15 de Noviembre, 2024</p>
+                <p>19:00 Horas</p>
+            </div>
+        </div>
+
+        <!-- AQUI VA SOLO EL MAPA (Eliminé el cuadro de texto de ubicación) -->
+        <div class="mapa-contenedor">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.123456!2d-74.08!3d4.60!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNMKwMzYnMDAuMCJOIDc0wrAwNCc0OC4wIlc!5e0!3m2!1ses!2sco!4v1234567890"
+                width="100%" height="300" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy">
+            </iframe>
+        </div>
+        <!-- Si quieres poner el nombre del lugar abajo del mapa, puedes dejar este texto pequeño -->
+        <p style="text-align: center; margin-top: 15px; color: #aaa;">Colegio San José Obrero - Salón Principal</p>
+
+        <div class="vestimenta">
+            <h4>Código de Vestimenta</h4>
+            <p>Elegante Sport</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero-principal">
+    <div class="capa-oscura"></div>
+    <div class="contenido-hero">
+        <span class="subtitulo">INVITACIÓN ESPECIAL</span>
+        <h1>Bodas de Oro</h1>
+        <p>50 años de una amistad que trasciende el tiempo</p>
+        <div class="contador">
+            <div><span id="dias">--</span><small>Días</small></div>
+            <div><span id="horas">--</span><small>Horas</small></div>
+            <div><span id="minutos">--</span><small>Min</small></div>
+        </div>
+        <a href="/evento" class="btn-principal">Ver Detalles</a>
+    </div>
+</section>
+
+<script>
+    // Cuenta regresiva
+    const fecha = new Date("Sep 04, 2027 09:00:00").getTime();
+    const x = setInterval(function () {
+        const now = new Date().getTime();
+        const dist = fecha - now;
+        document.getElementById("dias").innerText = Math.floor(dist / (1000 * 60 * 60 * 24));
+        document.getElementById("horas").innerText = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById("minutos").innerText = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+    }, 1000);
+</script>
+{% endblock %}

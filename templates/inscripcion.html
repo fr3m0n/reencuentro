@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="pagina-formulario">
+    <div class="encabezado-pagina">
+        <h2>Confirmar Asistencia</h2>
+        <p>Por favor, confirma tu participación antes del 1 de Noviembre.</p>
+    </div>
+
+    <div class="tarjeta-formulario">
+        {% if request.query_params.get('msg') == 'gracias' %}
+            <div class="alerta-exito">
+                ¡Gracias! Tu inscripción fue recibida correctamente.
+            </div>
+        {% else %}
+            <form action="/inscribir" method="POST">
+                <div class="campo">
+                    <label>Nombre Completo</label>
+                    <input type="text" name="nombre" required placeholder="Tu nombre">
+                </div>
+                <div class="campo">
+                    <label>Correo Electrónico</label>
+                    <input type="email" name="email" required placeholder="tu@email.com">
+                </div>
+                <div class="campo">
+                    <label>Teléfono</label>
+                    <input type="text" name="telefono" required placeholder="Número">
+                </div>
+                <div class="campo">
+                    <label>¿Asistirás?</label>
+                    <select name="asistencia">
+                        <option value="Si">Sí, ahí estaré</option>
+                        <option value="No">No podré ir</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label>Mensaje (opcional)</label>
+                    <textarea name="mensaje" rows="3" placeholder="Mensaje para los organizadores"></textarea>
+                </div>
+                <button type="submit" class="btn-principal btn-full">Enviar Inscripción</button>
+            </form>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

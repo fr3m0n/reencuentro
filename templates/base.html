@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reencuentro 1977</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap"
+        rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</head>
+
+<body>
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav class="menu-navegacion">
+        <div class="contenedor-menu">
+            <a href="/" class="logo">Promoción 1977</a>
+            <ul class="enlaces">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/evento">El Evento</a></li>
+                <li><a href="/galeria">Galería</a></li>
+                <li><a href="/inscripcion" class="btn-menu">Inscribirse</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL (Aquí se insertará el contenido de cada página) -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="pie-pagina">
+        <p>50 Aniversario - Promoción 1977</p>
+        <div class="redes">
+            <a href="#"><iconify-icon icon="mdi:facebook"></iconify-icon></a>
+            <a href="#"><iconify-icon icon="mdi:instagram"></iconify-icon></a>
+            <a href="#"><iconify-icon icon="mdi:whatsapp"></iconify-icon></a>
+        </div>
+    </footer>
+
+</body>
+
+</html>
