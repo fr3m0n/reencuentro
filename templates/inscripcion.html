@@ -8,7 +8,7 @@
     </div>
 
     <div class="tarjeta-formulario">
-        {% if request.query_params.get('msg') == 'gracias' %}
+        {% if request.args.get('msg') == 'gracias' %}
         <div class="alerta-exito">
             ¡Gracias! Tu inscripción fue recibida correctamente.
         </div>
