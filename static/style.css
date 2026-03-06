@@ -242,6 +242,21 @@ section {
 .mapa-contenedor {
     margin: 30px 0;
     border: 1px solid #333;
+    /* Agregamos esto para que el mapa se adapte y sin borde interno */
+    overflow: hidden;
+    border-radius: 10px;
+    /* Bordes redondeados */
+}
+
+.mapa-contenedor iframe {
+    border: 0;
+    /* Quitamos el borde aquí */
+    width: 100%;
+    /* Que ocupe todo el ancho */
+    height: 300px;
+    /* Altura fija o ajustable */
+    display: block;
+    /* Quita espacios fantasmas debajo */
 }
 
 .vestimenta {
