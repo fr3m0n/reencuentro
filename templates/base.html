@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reencuentro 1977</title>
+    <title>Reencuentro 1974</title>
     <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap"
         rel="stylesheet">
+    <!-- Iconos para el botón de música -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </head>
 
@@ -16,7 +18,7 @@
     <!-- MENÚ -->
     <nav class="menu-navegacion">
         <div class="contenedor-menu">
-            <a href="/" class="logo">Promoción 1977</a>
+            <a href="/" class="logo">Promoción 1974</a>
             <ul class="enlaces">
                 <li><a href="/">Inicio</a></li>
                 <li><a href="/evento">El Evento</a></li>
@@ -33,20 +35,17 @@
 
     <!-- FOOTER -->
     <footer class="pie-pagina">
-        <p>50 Aniversario - Promoción 1977</p>
-        <div class="redes">
-            <a href="#" aria-label="Facebook"><iconify-icon icon="mdi:facebook"></iconify-icon></a>
-            <a href="#" aria-label="Instagram"><iconify-icon icon="mdi:instagram"></iconify-icon></a>
-            <a href="#" aria-label="WhatsApp"><iconify-icon icon="mdi:whatsapp"></iconify-icon></a>
-        </div>
+        <p>50 Aniversario - Promoción 1974</p>
     </footer>
 
-    <!-- MÚSICA -->
+    <!-- REPRODUCTOR DE MÚSICA (START) -->
     <audio id="player" loop>
-        <source src="http://strw3.openstream.co/1498" type="audio/mpeg">
+        <!-- CAMBIA ESTA URL POR LA DE TU RADIO STREAMING O TU MP3 -->
+        <source src="https://113fm-atunwadigital.streamguys1.com/1066" type="audio/mpeg">
     </audio>
+
     <div id="music-btn" onclick="toggleMusic()">
-        <i id="icon-music" class="fas fa-broadcast-tower"></i>
+        <i id="icon-music" class="fas fa-music"></i>
     </div>
 
     <script>
@@ -66,6 +65,8 @@
             }
         }
     </script>
+    <!-- REPRODUCTOR DE MÚSICA (END) -->
+
 </body>
 
 </html>
