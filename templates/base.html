@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reencuentro 1977</title>
+    <title>Reencuentro 1974</title>
     <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap"
         rel="stylesheet">
@@ -13,10 +13,10 @@
 
 <body>
 
-    <!-- MENÚ DE NAVEGACIÓN -->
+    <!-- MENÚ -->
     <nav class="menu-navegacion">
         <div class="contenedor-menu">
-            <a href="/" class="logo">Promoción 1977</a>
+            <a href="/" class="logo">Promoción 1974</a>
             <ul class="enlaces">
                 <li><a href="/">Inicio</a></li>
                 <li><a href="/evento">El Evento</a></li>
@@ -26,21 +26,46 @@
         </div>
     </nav>
 
-    <!-- CONTENIDO PRINCIPAL (Aquí se insertará el contenido de cada página) -->
+    <!-- CONTENIDO -->
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    <!-- PIE DE PÁGINA -->
+    <!-- FOOTER -->
     <footer class="pie-pagina">
-        <p>50 Aniversario - Promoción 1977</p>
+        <p>50 Aniversario - Promoción 1974</p>
         <div class="redes">
-            <a href="#"><iconify-icon icon="mdi:facebook"></iconify-icon></a>
-            <a href="#"><iconify-icon icon="mdi:instagram"></iconify-icon></a>
-            <a href="#"><iconify-icon icon="mdi:whatsapp"></iconify-icon></a>
+            <a href="#" aria-label="Facebook"><iconify-icon icon="mdi:facebook"></iconify-icon></a>
+            <a href="#" aria-label="Instagram"><iconify-icon icon="mdi:instagram"></iconify-icon></a>
+            <a href="#" aria-label="WhatsApp"><iconify-icon icon="mdi:whatsapp"></iconify-icon></a>
         </div>
     </footer>
 
+    <!-- MÚSICA -->
+    <audio id="player" loop>
+        <source src="/static/cancion.mp3" type="audio/mpeg">
+    </audio>
+    <div id="music-btn" onclick="toggleMusic()">
+        <i id="icon-music" class="fas fa-music"></i>
+    </div>
+
+    <script>
+        var audio = document.getElementById("player");
+        var btn = document.getElementById("music-btn");
+        var icon = document.getElementById("icon-music");
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                icon.className = "fas fa-pause";
+                btn.classList.add("playing");
+            } else {
+                audio.pause();
+                icon.className = "fas fa-music";
+                btn.classList.remove("playing");
+            }
+        }
+    </script>
 </body>
 
 </html>

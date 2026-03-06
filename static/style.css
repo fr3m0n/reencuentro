@@ -40,12 +40,14 @@ a {
     color: white;
 }
 
-/* --- MENU --- */
+/* --- MENU (CORREGIDO PARA SAFARI) --- */
 .menu-navegacion {
     position: fixed;
     top: 0;
     width: 100%;
     background: rgba(0, 0, 0, 0.9);
+    /* Corrección Safari primero */
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid #333;
@@ -248,6 +250,13 @@ section {
     padding-top: 20px;
 }
 
+/* Estilo para el texto debajo del mapa */
+.texto-ubicacion {
+    text-align: center;
+    margin-top: 15px;
+    color: #aaa;
+}
+
 /* --- GALERÍA --- */
 .pagina-galeria {
     max-width: 1200px;
@@ -353,6 +362,7 @@ section {
     color: var(--dorado);
 }
 
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
     .enlaces {
         display: none;
