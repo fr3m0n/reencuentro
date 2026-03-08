@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+# ... otros imports ...
 from flask import Flask, render_template, request, redirect, url_for
 from sqlmodel import Session, select
 from database import engine, crear_db
@@ -7,6 +10,9 @@ from models import Inscrito
 crear_db()
 
 app = Flask(__name__)
+
+# Cargar variables del archivo .env
+load_dotenv()
 
 # --- RUTAS ---
 
@@ -20,7 +26,9 @@ def evento():
 
 @app.route("/galeria")
 def galeria():
-    return render_template("galeria.html")
+    api_key = os.environ.get("GOOGLE_API_KEY")
+    folder_id = os.environ.get("GOOGLE_FOLDER_ID")
+    return render_template("galeria.html", api_key=api_key, folder_id=folder_id)
 
 @app.route("/inscripcion")
 def inscripcion_view():
