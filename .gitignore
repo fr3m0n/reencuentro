@@ -1,1 +1,23 @@
+# Archivos secretos
 .env
+
+# Entorno Virtual (NO subir a GitHub)
+venv/
+env/
+ENV/
+
+# Archivos de Python (caché y compilados)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Base de datos (opcional, si no quieres subir la base de datos)
+# *.db
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración de VS Code
+.vscode/
