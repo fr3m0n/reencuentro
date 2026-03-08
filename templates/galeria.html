@@ -4,22 +4,72 @@
 <section class="pagina-galeria">
     <div class="encabezado-pagina">
         <h2>Galería de Recuerdos</h2>
-        <p>Los mejores momentos de nuestra juventud.</p>
+        <p>Álbum fotográfico de la Promoción 1977.</p>
     </div>
 
-    <div class="grid-galeria">
-        <div class="item-galeria">
-            <img src="https://placehold.co/400x400?text=Foto+1" alt="Foto 1">
+    <!-- Aquí aparecerán las fotos automáticamente -->
+    <div id="grid-fotos" class="grid-galeria">
+        <p class="mensaje-carga">Cargando álbum...</p>
+    </div>
+
+    <!-- SECCIÓN DE VIDEO (Sin estilos inline) -->
+    <div class="seccion-video">
+        <div class="encabezado-pagina">
+            <h2>Video del Recuerdo</h2>
         </div>
-        <div class="item-galeria">
-            <img src="https://placehold.co/400x600?text=Foto+2" alt="Foto 2">
-        </div>
-        <div class="item-galeria">
-            <img src="https://placehold.co/400x400?text=Foto+3" alt="Foto 3">
-        </div>
-        <div class="item-galeria">
-            <img src="https://placehold.co/400x500?text=Foto+4" alt="Foto 4">
+
+        <div class="video-contenedor">
+            <iframe src="https://www.youtube.com/embed/TU_CODIGO_AQUI" title="Video del Recuerdo Promoción 1977"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
         </div>
     </div>
+
 </section>
+
+<!-- Script Mágico para conectar con Google Drive -->
+<script>
+    // CONFIGURACIÓN: Pega aquí tu API Key y tu Folder ID
+    const API_KEY = 'AIzaSyAEWXoxwupA7LRZKWzSsCIXTFsQxlWkLyU';
+    const FOLDER_ID = '1vbToiO4fcbUQWzniIA0t1X3xhxFFdqL5';
+
+    async function cargarFotos() {
+        try {
+            const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,thumbnailLink,mimeType)&pageSize=50`;
+
+            const respuesta = await fetch(url);
+            const datos = await respuesta.json();
+
+            const contenedor = document.getElementById('grid-fotos');
+            contenedor.innerHTML = '';
+
+            if (datos.files && datos.files.length > 0) {
+                datos.files.forEach(archivo => {
+                    if (archivo.mimeType.startsWith('image/')) {
+                        const item = document.createElement('div');
+                        item.className = 'item-galeria';
+
+                        const img = document.createElement('img');
+                        img.src = `https://drive.google.com/uc?export=view&id=${archivo.id}`;
+                        img.alt = archivo.name;
+                        img.loading = 'lazy';
+
+                        item.appendChild(img);
+                        contenedor.appendChild(item);
+                    }
+                });
+            } else {
+                contenedor.innerHTML = '<p class="mensaje-carga">No se encontraron fotos en la carpeta.</p>';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('grid-fotos').innerHTML = '<p class="mensaje-error">Error al cargar las fotos. Revisa la consola.</p>';
+        }
+    }
+
+    cargarFotos();
+</script>
+
 {% endblock %}

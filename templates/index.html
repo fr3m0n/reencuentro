@@ -5,6 +5,7 @@
     <div class="capa-oscura"></div>
     <div class="contenido-hero">
         <span class="subtitulo">INVITACIÓN ESPECIAL</span>
+        <!-- CAMBIO: Título principal -->
         <h1>Bodas de Oro</h1>
         <p>50 años de una amistad que trasciende el tiempo</p>
         <div class="contador">
@@ -17,11 +18,14 @@
 </section>
 
 <script>
-    // Cuenta regresiva
-    const fecha = new Date("Sep 04, 2027 09:00:00").getTime();
+    // CAMBIO: Pon aquí la fecha exacta de tu evento (Año, Mes, Día, Hora)
+    // Recuerda: En JavaScript los meses van de 0 (Enero) a 11 (Diciembre)
+    // Ejemplo para 04 de Septiembre de 2027 a las 9:00 AM -> new Date("Sep 4, 2027 09:00:00")
+    const fechaEvento = new Date("Sep 4, 2027 09:00:00").getTime();
+
     const x = setInterval(function () {
         const now = new Date().getTime();
-        const dist = fecha - now;
+        const dist = fechaEvento - now;
         document.getElementById("dias").innerText = Math.floor(dist / (1000 * 60 * 60 * 24));
         document.getElementById("horas").innerText = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         document.getElementById("minutos").innerText = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));

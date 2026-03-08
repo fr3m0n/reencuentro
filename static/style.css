@@ -435,3 +435,61 @@ section {
         box-shadow: 0 0 0 0 rgba(197, 160, 89, 0);
     }
 }
+
+/* --- ESTILO PARA EL VIDEO (RESPONSIVE) --- */
+.video-contenedor {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    /* Ancho máximo */
+    margin: 0 auto 40px auto;
+    /* Centrado y margen abajo */
+    height: 0;
+    padding-bottom: 56.25%;
+    /* Proporción 16:9 */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.video-contenedor iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* --- MENSAJES DE ESTADO EN GALERIA --- */
+.mensaje-carga {
+    text-align: center;
+    width: 100%;
+    color: #aaa;
+    /* Color gris claro */
+}
+
+.mensaje-error {
+    text-align: center;
+    width: 100%;
+    color: #ff6b6b;
+    /* Color rojo suave */
+}
+
+/* --- ESTILO PARA SEPARAR EL VIDEO --- */
+.seccion-video {
+    margin-top: 60px;
+}
+
+/* --- MENSAJES DE ESTADO EN GALERIA --- */
+.mensaje-carga {
+    text-align: center;
+    width: 100%;
+    color: #aaa;
+}
+
+.mensaje-error {
+    text-align: center;
+    width: 100%;
+    color: #ff6b6b;
+}
