@@ -493,16 +493,69 @@ section {
     width: 100%;
     color: #ff6b6b;
 }
-/* --- MENÚ MÓVIL --- */
+/* --- MENU --- */
+.menu-navegacion {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid #333;
+}
+
+.contenedor-menu {
+    max-width: 1100px;
+    margin: auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--dorado);
+}
+
+.enlaces {
+    list-style: none;
+    display: flex;
+    /* En PC se ve horizontal */
+    gap: 30px;
+}
+
+.enlaces a {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.enlaces a:hover {
+    color: var(--dorado);
+}
+
+.btn-menu {
+    background: var(--dorado);
+    color: black !important;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* BOTÓN HAMBURGUESA (OCULTO EN PC) */
 .menu-movil-btn {
     display: none;
-    /* Oculto en PC */
+    /* Importante: oculto en PC */
     font-size: 2rem;
     color: var(--dorado);
     cursor: pointer;
-    z-index: 1001;
 }
 
+/* ESTILOS SOLO PARA MÓVIL */
 @media (max-width: 768px) {
     .menu-movil-btn {
         display: block;
@@ -511,7 +564,7 @@ section {
 
     .enlaces {
         display: none;
-        /* Oculto por defecto */
+        /* Oculto por defecto en móvil */
         position: absolute;
         top: 60px;
         left: 0;
@@ -523,7 +576,7 @@ section {
         z-index: 999;
     }
 
-    /* Clase que se activa con el script */
+    /* Clase que se activa con el click */
     .enlaces.activo {
         display: flex;
     }

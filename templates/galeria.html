@@ -20,7 +20,8 @@
 
     async function cargarFotos() {
         try {
-            const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType)&pageSize=100`;
+            // Pedimos también el thumbnailLink
+            const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,thumbnailLink)&pageSize=100`;
 
             const respuesta = await fetch(url);
 
@@ -33,26 +34,26 @@
             contenedor.innerHTML = '';
 
             if (datos.files && datos.files.length > 0) {
-                let contadorFotos = 0;
-
                 datos.files.forEach(archivo => {
                     const item = document.createElement('div');
                     item.className = 'item-galeria';
 
                     // SI ES IMAGEN
                     if (archivo.mimeType.startsWith('image/')) {
-                        contadorFotos++;
                         const img = document.createElement('img');
-                        // Enlace directo para ver imagen
-                        img.src = `https://drive.google.com/uc?export=view&id=${archivo.id}`;
+
+                        // Usamos thumbnailLink si existe, si no, usamos el otro método
+                        if (archivo.thumbnailLink) {
+                            img.src = archivo.thumbnailLink;
+                        } else {
+                            img.src = `https://drive.google.com/uc?export=view&id=${archivo.id}`;
+                        }
+
                         img.alt = archivo.name;
                         img.loading = 'lazy';
-
-                        // Si la imagen da error (permisos), la ocultamos
-                        img.onerror = function () {
-                            this.style.display = 'none';
-                            console.warn('Imagen bloqueada por permisos:', archivo.name);
-                        };
+                        img.style.width = '100%';
+                        img.style.height = 'auto';
+                        img.style.objectFit = 'cover';
 
                         item.appendChild(img);
                     }
@@ -77,21 +78,15 @@
                     contenedor.appendChild(item);
                 });
 
-                // Si no cargó fotos, avisar
-                if (contadorFotos === 0) {
-                    contenedor.innerHTML = '<p class="mensaje-error">Se encontraron archivos, pero las imágenes están bloqueadas.<br>Asegúrate de que las fotos tengan permiso "Cualquier persona con el enlace".</p>';
-                }
-
             } else {
-                contenedor.innerHTML = '<p class="mensaje-carga">No se encontraron archivos en la carpeta.</p>';
+                contenedor.innerHTML = '<p class="mensaje-carga">No se encontraron archivos.</p>';
             }
         } catch (error) {
             console.error('Error detallado:', error);
-            document.getElementById('grid-fotos').innerHTML = '<p class="mensaje-error">Error al cargar. Revisa la consola.</p>';
+            document.getElementById('grid-fotos').innerHTML = '<p class="mensaje-error">Error al cargar.</p>';
         }
     }
 
     cargarFotos();
 </script>
-
 {% endblock %}
