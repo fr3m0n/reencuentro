@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CAMBIO: Título de la pestaña -->
     <title>Reencuentro 1977</title>
     <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap"
         rel="stylesheet">
+    <!-- Iconos para el menú y el botón de música -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </head>
@@ -18,9 +18,14 @@
     <!-- MENÚ -->
     <nav class="menu-navegacion">
         <div class="contenedor-menu">
-            <!-- CAMBIO: Logo del menú -->
             <a href="/" class="logo">Promoción 1977</a>
-            <ul class="enlaces">
+
+            <!-- BOTÓN HAMBURGUESA (Solo visible en móvil) -->
+            <div class="menu-movil-btn" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <ul class="enlaces" id="menuEnlaces">
                 <li><a href="/">Inicio</a></li>
                 <li><a href="/evento">El Evento</a></li>
                 <li><a href="/galeria">Galería</a></li>
@@ -29,28 +34,38 @@
         </div>
     </nav>
 
-    <!-- CONTENIDO -->
+    <!-- CONTENIDO PRINCIPAL -->
     <main>
         {% block content %}{% endblock %}
     </main>
 
     <!-- FOOTER -->
     <footer class="pie-pagina">
-        <!-- CAMBIO: Año de la promoción -->
         <p>50 Aniversario - Promoción 1977</p>
     </footer>
 
-    <!-- REPRODUCTOR (Asegúrate de que esté aquí) -->
+    <!-- REPRODUCTOR DE MÚSICA -->
     <audio id="player" loop>
-        <source src="https://stream.zeno.fm/8fwxmkmhka0uv" type="audio/mpeg">
+        <!-- Asegúrate de subir tu canción como cancion.mp3 en la carpeta static -->
+        <source src="/static/cancion.mp3" type="audio/mpeg">
     </audio>
     <div id="music-btn" onclick="toggleMusic()">
         <i id="icon-music" class="fas fa-music"></i>
     </div>
+
+    <!-- SCRIPTS -->
     <script>
+        // --- FUNCIÓN PARA EL MENÚ MÓVIL ---
+        function toggleMenu() {
+            const menu = document.getElementById('menuEnlaces');
+            menu.classList.toggle('activo');
+        }
+
+        // --- FUNCIÓN PARA LA MÚSICA ---
         var audio = document.getElementById("player");
         var btn = document.getElementById("music-btn");
         var icon = document.getElementById("icon-music");
+
         function toggleMusic() {
             if (audio.paused) {
                 audio.play();

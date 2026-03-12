@@ -493,3 +493,42 @@ section {
     width: 100%;
     color: #ff6b6b;
 }
+/* --- MENÚ MÓVIL --- */
+.menu-movil-btn {
+    display: none;
+    /* Oculto en PC */
+    font-size: 2rem;
+    color: var(--dorado);
+    cursor: pointer;
+    z-index: 1001;
+}
+
+@media (max-width: 768px) {
+    .menu-movil-btn {
+        display: block;
+        /* Visible en móvil */
+    }
+
+    .enlaces {
+        display: none;
+        /* Oculto por defecto */
+        position: absolute;
+        top: 60px;
+        /* Debajo de la barra negra */
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.98);
+        flex-direction: column;
+        padding: 20px 0;
+        border-top: 1px solid #333;
+    }
+
+    /* Clase para mostrar el menú cuando se hace clic */
+    .enlaces.activo {
+        display: flex;
+    }
+
+    .enlaces li {
+        margin: 10px 0;
+    }
+}
