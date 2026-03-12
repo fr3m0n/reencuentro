@@ -12,22 +12,6 @@
         <p class="mensaje-carga">Cargando álbum...</p>
     </div>
 
-    <!-- SECCIÓN DE VIDEO YOUTUBE -->
-    <div class="seccion-video">
-        <div class="encabezado-pagina">
-            <h2>Video del Recuerdo</h2>
-        </div>
-
-        <div class="video-contenedor">
-            <!-- RECUERDA CAMBIAR ID_DEL_VIDEO_AQUI por el ID real de YouTube -->
-            <iframe src="https://www.youtube.com/embed/ID_DEL_VIDEO_AQUI" title="Video del Recuerdo Promoción 1977"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe>
-        </div>
-    </div>
-
 </section>
 
 <script>
@@ -49,27 +33,36 @@
             contenedor.innerHTML = '';
 
             if (datos.files && datos.files.length > 0) {
+                let contadorFotos = 0;
+
                 datos.files.forEach(archivo => {
                     const item = document.createElement('div');
                     item.className = 'item-galeria';
 
-                    // 1. SI ES IMAGEN
+                    // SI ES IMAGEN
                     if (archivo.mimeType.startsWith('image/')) {
+                        contadorFotos++;
                         const img = document.createElement('img');
+                        // Enlace directo para ver imagen
                         img.src = `https://drive.google.com/uc?export=view&id=${archivo.id}`;
                         img.alt = archivo.name;
                         img.loading = 'lazy';
+
+                        // Si la imagen da error (permisos), la ocultamos
+                        img.onerror = function () {
+                            this.style.display = 'none';
+                            console.warn('Imagen bloqueada por permisos:', archivo.name);
+                        };
+
                         item.appendChild(img);
                     }
-                    // 2. SI ES VIDEO MP4
+                    // SI ES VIDEO MP4
                     else if (archivo.mimeType === 'video/mp4') {
-                        // Creamos un contenedor para el video
                         const videoWrapper = document.createElement('div');
                         videoWrapper.style.position = 'relative';
                         videoWrapper.style.width = '100%';
                         videoWrapper.style.height = '100%';
 
-                        // Usamos un iframe de Google Drive para reproducirlo
                         const iframe = document.createElement('iframe');
                         iframe.src = `https://drive.google.com/file/d/${archivo.id}/preview`;
                         iframe.style.width = '100%';
@@ -83,12 +76,18 @@
 
                     contenedor.appendChild(item);
                 });
+
+                // Si no cargó fotos, avisar
+                if (contadorFotos === 0) {
+                    contenedor.innerHTML = '<p class="mensaje-error">Se encontraron archivos, pero las imágenes están bloqueadas.<br>Asegúrate de que las fotos tengan permiso "Cualquier persona con el enlace".</p>';
+                }
+
             } else {
-                contenedor.innerHTML = '<p class="mensaje-carga">No se encontraron archivos.</p>';
+                contenedor.innerHTML = '<p class="mensaje-carga">No se encontraron archivos en la carpeta.</p>';
             }
         } catch (error) {
             console.error('Error detallado:', error);
-            document.getElementById('grid-fotos').innerHTML = '<p class="mensaje-error">Error al cargar. Revisa la API Key.</p>';
+            document.getElementById('grid-fotos').innerHTML = '<p class="mensaje-error">Error al cargar. Revisa la consola.</p>';
         }
     }
 

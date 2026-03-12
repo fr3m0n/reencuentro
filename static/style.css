@@ -514,21 +514,22 @@ section {
         /* Oculto por defecto */
         position: absolute;
         top: 60px;
-        /* Debajo de la barra negra */
         left: 0;
         width: 100%;
         background: rgba(0, 0, 0, 0.98);
         flex-direction: column;
         padding: 20px 0;
         border-top: 1px solid #333;
+        z-index: 999;
     }
 
-    /* Clase para mostrar el menú cuando se hace clic */
+    /* Clase que se activa con el script */
     .enlaces.activo {
         display: flex;
     }
 
     .enlaces li {
         margin: 10px 0;
+        text-align: center;
     }
 }

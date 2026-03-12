@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap"
         rel="stylesheet">
-    <!-- Iconos para el menú y el botón de música -->
+    <!-- Iconos para el menú y música -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </head>
@@ -20,7 +20,7 @@
         <div class="contenedor-menu">
             <a href="/" class="logo">Promoción 1977</a>
 
-            <!-- BOTÓN HAMBURGUESA (Solo visible en móvil) -->
+            <!-- BOTÓN MÓVIL -->
             <div class="menu-movil-btn" onclick="toggleMenu()">
                 <i class="fas fa-bars"></i>
             </div>
@@ -34,7 +34,7 @@
         </div>
     </nav>
 
-    <!-- CONTENIDO PRINCIPAL -->
+    <!-- CONTENIDO -->
     <main>
         {% block content %}{% endblock %}
     </main>
@@ -44,16 +44,15 @@
         <p>50 Aniversario - Promoción 1977</p>
     </footer>
 
-    <!-- REPRODUCTOR DE MÚSICA -->
+    <!-- MÚSICA -->
     <audio id="player" loop>
-        <!-- Asegúrate de subir tu canción como cancion.mp3 en la carpeta static -->
-        <source src="/static/cancion.mp3" type="audio/mpeg">
+        <source src="https://stream.zeno.fm/nftb1pqe408uv" type="audio/mpeg">
     </audio>
     <div id="music-btn" onclick="toggleMusic()">
         <i id="icon-music" class="fas fa-music"></i>
     </div>
 
-    <!-- SCRIPTS -->
+    <!-- SCRIPTS IMPORTANTES -->
     <script>
         // --- FUNCIÓN PARA EL MENÚ MÓVIL ---
         function toggleMenu() {
