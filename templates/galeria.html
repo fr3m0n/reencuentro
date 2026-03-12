@@ -61,22 +61,31 @@
                     // SI ES IMAGEN
                     if (archivo.mimeType.startsWith('image/')) {
                         const img = document.createElement('img');
-                        img.alt = archivo.name || 'Foto de la galería'; // Alt dinámico
+                        img.alt = archivo.name;
 
+                        let thumbSrc = '';
                         if (archivo.thumbnailLink) {
-                            img.src = archivo.thumbnailLink;
+                            thumbSrc = archivo.thumbnailLink;
                         } else {
-                            img.src = `https://drive.google.com/uc?export=view&id=${archivo.id}`;
+                            thumbSrc = `https://drive.google.com/uc?export=view&id=${archivo.id}`;
                         }
 
+                        img.src = thumbSrc;
                         img.loading = 'lazy';
                         img.style.cursor = 'pointer';
 
+                        // --- CORRECCIÓN CLAVE AQUÍ ---
                         img.onclick = function () {
-                            abrirModal(
-                                `https://drive.google.com/uc?export=view&id=${archivo.id}`,
-                                archivo.name
-                            );
+                            // Truco: Tomamos la URL de la miniatura y la modificamos para tamaño grande
+                            // Reemplazamos =s220 por =s1000 (o simplemente lo quitamos)
+                            let fullSrc = thumbSrc.replace(/=s\d+(-c)?/, "=s1000");
+
+                            // Si la modificación falla, usamos el ID directo
+                            if (!fullSrc.includes("=s1000")) {
+                                fullSrc = `https://drive.google.com/uc?export=view&id=${archivo.id}`;
+                            }
+
+                            abrirModal(fullSrc, archivo.name);
                         };
 
                         item.appendChild(img);
@@ -87,7 +96,7 @@
                         iframe.src = `https://drive.google.com/file/d/${archivo.id}/preview`;
                         iframe.loading = 'lazy';
                         iframe.allow = "autoplay";
-                        iframe.title = archivo.name || "Video"; // Title para iframe
+                        iframe.title = archivo.name;
 
                         item.appendChild(iframe);
                     }
@@ -96,7 +105,6 @@
                 });
             }
 
-            // Lógica del botón "Cargar más"
             if (datos.nextPageToken) {
                 nextPageToken = datos.nextPageToken;
                 document.getElementById('btnCargarMas').style.display = 'inline-block';
@@ -133,12 +141,10 @@
         document.getElementById('miModal').style.display = "none";
     }
 
-    // Cerrar modal con tecla ESC
     document.addEventListener('keydown', function (e) {
         if (e.key === "Escape") cerrarModal();
     });
 
-    // Cargar inicio
     cargarFotos();
 </script>
 

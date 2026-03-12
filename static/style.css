@@ -717,3 +717,11 @@ section {
     left: 50%;
     transform: translateX(-50%);
 }
+
+/* Asegura que la imagen del modal se vea grande */
+.modal-contenido {
+    max-width: 95%;
+    max-height: 95%;
+    width: auto;
+    height: auto;
+}
