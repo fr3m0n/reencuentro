@@ -13,6 +13,9 @@
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 </head>
 
+<!-- Botón volver arriba -->
+<button onclick="topFunction()" id="myBtn" title="Ir arriba">↑</button>
+
 <body>
 
     <!-- MENÚ -->
@@ -76,6 +79,25 @@
                 btn.classList.remove("playing");
             }
         }
+    // Obtener el botón
+    let mybutton = document.getElementById("myBtn");
+
+    // Cuando el usuario baja 20px, muestra el botón
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+
+    // Cuando hace clic, sube
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
     </script>
 
 </body>
