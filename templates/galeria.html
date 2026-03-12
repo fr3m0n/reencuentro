@@ -12,26 +12,39 @@
         <p class="mensaje-carga">Cargando álbum...</p>
     </div>
 
+   
+        <!-- Botón para cargar más (Sin estilos inline) -->
+        <div class="contenedor-cargar-mas">
+            <button id="btnCargarMas" class="btn-principal" onclick="cargarMasFotos()">
+                Cargar más fotos
+            </button>
+        </div>
+
 </section>
 
 <script>
     const API_KEY = '{{ api_key }}';
     const FOLDER_ID = '{{ folder_id }}';
 
-    async function cargarFotos() {
+    let nextPageToken = null; // Variable para saber qué página sigue
+
+    async function cargarFotos(token = null) {
         try {
-            // Pedimos también el thumbnailLink
-            const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType,thumbnailLink)&pageSize=100`;
+            // Construir URL. Si hay token, lo agregamos. Pedimos 20 por carga.
+            let url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=nextPageToken,files(id,name,mimeType,thumbnailLink)&pageSize=20`;
+            if (token) {
+                url += `&pageToken=${token}`;
+            }
 
             const respuesta = await fetch(url);
 
-            if (!respuesta.ok) {
-                throw new Error(`Error HTTP: ${respuesta.status}`);
-            }
+            if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
 
             const datos = await respuesta.json();
             const contenedor = document.getElementById('grid-fotos');
-            contenedor.innerHTML = '';
+
+            // Si es la primera carga, borramos el mensaje "Cargando..."
+            if (!token) contenedor.innerHTML = '';
 
             if (datos.files && datos.files.length > 0) {
                 datos.files.forEach(archivo => {
@@ -41,52 +54,58 @@
                     // SI ES IMAGEN
                     if (archivo.mimeType.startsWith('image/')) {
                         const img = document.createElement('img');
-
-                        // Usamos thumbnailLink si existe, si no, usamos el otro método
+                        // Usamos el thumbnail para que cargue rápido y alineado
                         if (archivo.thumbnailLink) {
                             img.src = archivo.thumbnailLink;
                         } else {
                             img.src = `https://drive.google.com/uc?export=view&id=${archivo.id}`;
                         }
-
                         img.alt = archivo.name;
-                        img.loading = 'lazy';
-                        img.style.width = '100%';
-                        img.style.height = 'auto';
-                        img.style.objectFit = 'cover';
+                        img.loading = 'lazy'; // Carga perezosa
 
                         item.appendChild(img);
                     }
                     // SI ES VIDEO MP4
                     else if (archivo.mimeType === 'video/mp4') {
-                        const videoWrapper = document.createElement('div');
-                        videoWrapper.style.position = 'relative';
-                        videoWrapper.style.width = '100%';
-                        videoWrapper.style.height = '100%';
-
                         const iframe = document.createElement('iframe');
                         iframe.src = `https://drive.google.com/file/d/${archivo.id}/preview`;
-                        iframe.style.width = '100%';
-                        iframe.style.height = '100%';
-                        iframe.style.border = 'none';
+                        iframe.loading = 'lazy'; // Carga perezosa
                         iframe.allow = "autoplay";
 
-                        videoWrapper.appendChild(iframe);
-                        item.appendChild(videoWrapper);
+                        item.appendChild(iframe);
                     }
 
                     contenedor.appendChild(item);
                 });
-
-            } else {
-                contenedor.innerHTML = '<p class="mensaje-carga">No se encontraron archivos.</p>';
             }
+
+            // Lógica del botón "Cargar más"
+            if (datos.nextPageToken) {
+                nextPageToken = datos.nextPageToken; // Guardamos el token para la próxima
+                document.getElementById('btnCargarMas').style.display = 'inline-block';
+            } else {
+                // Si no hay más páginas, ocultamos el botón
+                document.getElementById('btnCargarMas').style.display = 'none';
+                if (!token && (!datos.files || datos.files.length === 0)) {
+                    contenedor.innerHTML = '<p class="mensaje-carga">No se encontraron archivos.</p>';
+                }
+            }
+
         } catch (error) {
-            console.error('Error detallado:', error);
+            console.error('Error:', error);
             document.getElementById('grid-fotos').innerHTML = '<p class="mensaje-error">Error al cargar.</p>';
         }
     }
 
+    // Función que llama el botón
+    function cargarMasFotos() {
+        if (nextPageToken) {
+            cargarFotos(nextPageToken);
+        }
+    }
+
+    // Carga inicial
     cargarFotos();
 </script>
+
 {% endblock %}

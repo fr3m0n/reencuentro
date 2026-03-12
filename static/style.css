@@ -586,3 +586,62 @@ section {
         text-align: center;
     }
 }
+
+/* --- GALERÍA MEJORADA (Alineación Perfecta) --- */
+.grid-galeria {
+    display: grid;
+    /* Crea columnas automáticas de mínimo 280px */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* Fuerza a que todas las filas tengan la misma altura */
+    grid-auto-rows: 280px;
+    gap: 15px;
+    padding: 10px;
+}
+
+.item-galeria {
+    overflow: hidden;
+    border-radius: 8px;
+    position: relative;
+    background-color: #222;
+    /* Fondo mientras carga */
+}
+
+/* Hace que la foto cubra el cuadro sin deformarse */
+.item-galeria img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* ¡Clave! Recorta lo que sobre para que sea cuadrada */
+    transition: transform 0.3s ease;
+}
+
+.item-galeria:hover img {
+    transform: scale(1.05);
+}
+
+/* Ajuste para videos dentro de la galería */
+.item-galeria iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Estilo para el mensaje de carga inicial */
+.mensaje-carga,
+.mensaje-error {
+    text-align: center;
+    padding: 40px;
+    color: #aaa;
+    grid-column: 1 / -1;
+    /* Ocupa todo el ancho */
+}
+/* --- CONTENEDOR DEL BOTÓN CARGAR MÁS --- */
+.contenedor-cargar-mas {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* El botón está oculto por defecto, el script lo mostrará si hay más fotos */
+#btnCargarMas {
+    display: none;
+}
