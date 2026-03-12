@@ -4,22 +4,23 @@
 <section class="pagina-galeria">
     <div class="encabezado-pagina">
         <h2>Galería de Recuerdos</h2>
-        <p>Álbum fotográfico de la Promoción 1977.</p>
+        <p>Álbum fotográfico y de videos de la Promoción 1977.</p>
     </div>
 
-    <!-- Aquí aparecerán las fotos automáticamente -->
+    <!-- Contenedor dinámico -->
     <div id="grid-fotos" class="grid-galeria">
         <p class="mensaje-carga">Cargando álbum...</p>
     </div>
 
-    <!-- SECCIÓN DE VIDEO (Sin estilos inline) -->
+    <!-- SECCIÓN DE VIDEO YOUTUBE -->
     <div class="seccion-video">
         <div class="encabezado-pagina">
             <h2>Video del Recuerdo</h2>
         </div>
 
         <div class="video-contenedor">
-            <iframe src="https://www.youtube.com/embed/TU_CODIGO_AQUI" title="Video del Recuerdo Promoción 1977"
+            <!-- RECUERDA CAMBIAR ID_DEL_VIDEO_AQUI por el ID real de YouTube -->
+            <iframe src="https://www.youtube.com/embed/ID_DEL_VIDEO_AQUI" title="Video del Recuerdo Promoción 1977"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
@@ -29,43 +30,65 @@
 
 </section>
 
-<!-- Script Mágico para conectar con Google Drive -->
 <script>
-    // CONFIGURACIÓN: Pega aquí tu API Key y tu Folder ID
-    const API_KEY = 'AIzaSyAEWXoxwupA7LRZKWzSsCIXTFsQxlWkLyU';
-    const FOLDER_ID = '1vbToiO4fcbUQWzniIA0t1X3xhxFFdqL5';
+    const API_KEY = '{{ api_key }}';
+    const FOLDER_ID = '{{ folder_id }}';
 
     async function cargarFotos() {
         try {
-            const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,thumbnailLink,mimeType)&pageSize=50`;
+            const url = `https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType)&pageSize=100`;
 
             const respuesta = await fetch(url);
-            const datos = await respuesta.json();
 
+            if (!respuesta.ok) {
+                throw new Error(`Error HTTP: ${respuesta.status}`);
+            }
+
+            const datos = await respuesta.json();
             const contenedor = document.getElementById('grid-fotos');
             contenedor.innerHTML = '';
 
             if (datos.files && datos.files.length > 0) {
                 datos.files.forEach(archivo => {
-                    if (archivo.mimeType.startsWith('image/')) {
-                        const item = document.createElement('div');
-                        item.className = 'item-galeria';
+                    const item = document.createElement('div');
+                    item.className = 'item-galeria';
 
+                    // 1. SI ES IMAGEN
+                    if (archivo.mimeType.startsWith('image/')) {
                         const img = document.createElement('img');
                         img.src = `https://drive.google.com/uc?export=view&id=${archivo.id}`;
                         img.alt = archivo.name;
                         img.loading = 'lazy';
-
                         item.appendChild(img);
-                        contenedor.appendChild(item);
                     }
+                    // 2. SI ES VIDEO MP4
+                    else if (archivo.mimeType === 'video/mp4') {
+                        // Creamos un contenedor para el video
+                        const videoWrapper = document.createElement('div');
+                        videoWrapper.style.position = 'relative';
+                        videoWrapper.style.width = '100%';
+                        videoWrapper.style.height = '100%';
+
+                        // Usamos un iframe de Google Drive para reproducirlo
+                        const iframe = document.createElement('iframe');
+                        iframe.src = `https://drive.google.com/file/d/${archivo.id}/preview`;
+                        iframe.style.width = '100%';
+                        iframe.style.height = '100%';
+                        iframe.style.border = 'none';
+                        iframe.allow = "autoplay";
+
+                        videoWrapper.appendChild(iframe);
+                        item.appendChild(videoWrapper);
+                    }
+
+                    contenedor.appendChild(item);
                 });
             } else {
-                contenedor.innerHTML = '<p class="mensaje-carga">No se encontraron fotos en la carpeta.</p>';
+                contenedor.innerHTML = '<p class="mensaje-carga">No se encontraron archivos.</p>';
             }
         } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('grid-fotos').innerHTML = '<p class="mensaje-error">Error al cargar las fotos. Revisa la consola.</p>';
+            console.error('Error detallado:', error);
+            document.getElementById('grid-fotos').innerHTML = '<p class="mensaje-error">Error al cargar. Revisa la API Key.</p>';
         }
     }
 
