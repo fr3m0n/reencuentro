@@ -730,7 +730,7 @@ section {
 #myBtn {
     display: none;
     position: fixed;
-    bottom: 30px;
+    bottom: 100px;
     /* Cerca del suelo */
     right: 30px;
     z-index: 9999;
@@ -773,7 +773,7 @@ section {
 /* BOTÓN WHATSAPP (Más arriba, para no chocar) */
 .whatsapp-btn {
     position: fixed;
-    bottom: 100px;
+    bottom: 170px;
     /* 70px más arriba que el otro */
     right: 30px;
     width: 60px;
