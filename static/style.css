@@ -770,3 +770,28 @@ section {
         transform: rotate(360deg);
     }
 }
+/* --- BOTÓN FLOTANTE DE WHATSAPP --- */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 100px;
+    /* Lo ponemos 100px arriba para que no choque con el de música (que está a 30px) */
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366;
+    /* Verde oficial de WhatsApp */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    z-index: 9999;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+    color: white;
+}
